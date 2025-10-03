@@ -15,11 +15,16 @@ This assignment completes our movie chatbot system by implementing action functi
 ## Reflection Questions
 
 1. What are some key programming concepts or techniques that you learned while completing this assignment?
-
-
-
+ - Pattern matching with `%` and `_` to capture parts of input.
+ - Filtering a list of tuples using small helper functions.
+ - Clear return conventions (always lists) and simple control flow for no-match cases.
 2. How does the overall movie chatbot system work? Explain the flow from when a user types a query to when they receive an answer.
-
-
-
+ - Input is lowercased, cleaned, and split into words.
+ - Each pattern in `pa_list` is tried with `match`; the first match wins.
+ - The action runs with captured args and returns answers.
+ - No answers → ["No answers"]. No pattern → ["I don't understand"].
+ - Answers are printed; "bye" exits.
 3. What are some real-world applications where this type of pattern-matching chatbot system could be useful? How might you extend or improve this system for practical use?
+ - FAQs/help desks; small catalog/library searches; simple command bots.
+ - Add fuzzy matching and synonyms. basic entity recognition for names and years.
+ - Rank multiple matches and ask clarifying questions when ambiguous.

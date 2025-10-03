@@ -55,6 +55,7 @@ def title_by_year(matches: List[str]) -> List[str]:
         a list of movie titles made in the passed in year
     """
     year = int(matches[0])
+    result: List[str] = []
     for movie in movie_db:
         if get_year(movie) == year:
             result.append(get_title(movie))
@@ -73,7 +74,16 @@ def title_by_year_range(matches: List[str]) -> List[str]:
         a list of movie titles made during those years, inclusive (meaning if you pass
         in ["1991", "1994"] you will get movies made in 1991, 1992, 1993 & 1994)
     """
-    pass
+    start_year = int(matches[0])
+    end_year = int(matches[1])
+    low = min(start_year, end_year)
+    high = max(start_year, end_year)
+    result: List[str] = []
+    for movie in movie_db:
+        y = get_year(movie)
+        if low <= y <= high:
+            result.append(get_title(movie))
+    return result
 
 
 def title_before_year(matches: List[str]) -> List[str]:
@@ -87,7 +97,12 @@ def title_before_year(matches: List[str]) -> List[str]:
         a list of movie titles made before the passed in year, exclusive (meaning if you
         pass in 1992 you won't get any movies made that year, only before)
     """
-    pass
+    year = int(matches[0])
+    result: List[str] = []
+    for movie in movie_db:
+        if get_year(movie) < year:
+            result.append(get_title(movie))
+    return result
 
 
 def title_after_year(matches: List[str]) -> List[str]:
@@ -101,7 +116,12 @@ def title_after_year(matches: List[str]) -> List[str]:
         a list of movie titles made after the passed in year, exclusive (meaning if you
         pass in 1992 you won't get any movies made that year, only after)
     """
-    pass
+    year = int(matches[0])
+    result: List[str] = []
+    for movie in movie_db:
+        if get_year(movie) > year:
+            result.append(get_title(movie))
+    return result
 
 
 def director_by_title(matches: List[str]) -> List[str]:
@@ -113,7 +133,11 @@ def director_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of 1 string, the director of the movie
     """
-    pass
+    title = matches[0]
+    for movie in movie_db:
+        if get_title(movie) == title:
+            return [get_director(movie)]
+    return []
 
 
 def title_by_director(matches: List[str]) -> List[str]:
@@ -125,7 +149,12 @@ def title_by_director(matches: List[str]) -> List[str]:
     Returns:
         a list of movies titles directed by the passed in director
     """
-    pass
+    director = matches[0]
+    result: List[str] = []
+    for movie in movie_db:
+        if get_director(movie) == director:
+            result.append(get_title(movie))
+    return result
 
 
 def actors_by_title(matches: List[str]) -> List[str]:
@@ -137,7 +166,11 @@ def actors_by_title(matches: List[str]) -> List[str]:
     Returns:
         a list of actors who acted in the passed in title
     """
-    pass
+    title = matches[0]
+    for movie in movie_db:
+        if get_title(movie) == title:
+            return list(get_actors(movie))
+    return []
 
 
 def year_by_title(matches: List[str]) -> List[int]:
@@ -149,7 +182,11 @@ def year_by_title(matches: List[str]) -> List[int]:
     Returns:
         a list of one item (an int), the year that the movie was made
     """
-    pass
+    title = matches[0]
+    for movie in movie_db:
+        if get_title(movie) == title:
+            return [get_year(movie)]
+    return []
 
 
 def title_by_actor(matches: List[str]) -> List[str]:
@@ -161,7 +198,12 @@ def title_by_actor(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles that the actor acted in
     """
-    pass
+    actor = matches[0]
+    result: List[str] = []
+    for movie in movie_db:
+        if actor in get_actors(movie):
+            result.append(get_title(movie))
+    return result
 
 
 # dummy argument is ignored and doesn't matter
@@ -200,7 +242,14 @@ def search_pa_list(src: List[str]) -> List[str]:
         a list of answers. Will be ["I don't understand"] if it finds no matches and
         ["No answers"] if it finds a match but no answers
     """
-    pass
+    for pattern, action in pa_list:
+        matches = match(pattern, src)
+        if matches is not None:
+            answers = action(matches)
+            if len(answers) == 0:
+                return ["No answers"]
+            return answers  # type: ignore[return-value]
+    return ["I don't understand"]
 
 
 def query_loop() -> None:
@@ -284,3 +333,4 @@ if __name__ == "__main__":
     ) == sorted(["No answers"]), "failed search_pa_list test 3"
 
     print("All tests passed!")
+

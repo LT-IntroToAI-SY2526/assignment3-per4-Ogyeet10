@@ -10,6 +10,8 @@ geometry: margin=1in
 urlcolor: cyan
 ---
 
+PS from Aidan: I left the `tmdb_cli.py` Python file in here in case you want to play around with it as well as complete the assignment. I'm sure you can figure out how to get an API key. You will have to use a virtual environment (`venv`) to run it since Claude used a few packages. [`uv`](https://docs.astral.sh/uv/getting-started/installation/) would let you just run `uv install`(no args, the deps in the `toml`) and `uv run <file>` without the work of having to use `pip` and manually set up a venv.`pip` will work just fine though.
+
 In this assignment, we begin to construct a natural language query system. We will create a program that will participate in dialogs like the following.
 
 ```text
