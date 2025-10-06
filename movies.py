@@ -435,4 +435,16 @@ movie_db: List[Tuple[str, str, int, List[str]]] = [
             "spike lee",
         ],
     ),
+    (
+        "the shawshank redemption",
+        "frank darabont",
+        1994,
+        [
+            "tim robbins",
+            "morgan freeman",
+            "bob gunton",
+            "william sadler",
+            "clancy brown",
+        ],
+    ),
 ]
